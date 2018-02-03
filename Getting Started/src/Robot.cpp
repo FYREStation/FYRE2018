@@ -11,12 +11,18 @@
 #include <LiveWindow/LiveWindow.h>
 #include <Spark.h>
 #include <Timer.h>
+#include <PWMSpeedController.h>
+
+#define ARMS_IN		1
+#define ARMS_OUT	2
 
 class Robot : public frc::IterativeRobot {
 public:
 	Robot() {
 		m_robotDrive.SetExpiration(0.1);
 		m_timer.Start();
+
+		arm_left.SetInverted(true);
 	}
 
 	void AutonomousInit() override {
@@ -40,6 +46,29 @@ public:
 	void TeleopPeriodic() override {
 		// Drive with arcade style (use right stick)
 		m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
+		if(m_stick.GetRawButton(ARMS_IN) == true)
+		{
+			arm_left.Set(0.5);
+			arm_right.Set(0.5);
+		}
+		else
+		{
+			arm_left.Set(0);
+			arm_right.Set(0);
+		}
+
+		if(m_stick.GetRawButton(ARMS_OUT) == true)
+		{
+			arm_left.Set(-0.5);
+			arm_right.Set(-0.5);
+		}
+		else
+		{
+			arm_left.Set(0);
+			arm_right.Set(0);
+		}
+		//m_robotArms.ArcadeDrive();
+
 	}
 
 	void TestPeriodic() override {}
@@ -49,6 +78,9 @@ private:
 	frc::Spark m_left{0};
 	frc::Spark m_right{1};
 	frc::DifferentialDrive m_robotDrive{m_left, m_right};
+	//Robot arm system
+	frc::Spark arm_left{2};
+	frc::Spark arm_right{3};
 
 	frc::Joystick m_stick{0};
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
