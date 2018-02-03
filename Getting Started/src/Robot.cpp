@@ -13,8 +13,8 @@
 #include <Timer.h>
 #include <PWMSpeedController.h>
 
-#define ARMS_IN		1
-#define ARMS_OUT	2
+#define ARMS_OUT	1
+#define ARMS_IN		2
 
 class Robot : public frc::IterativeRobot {
 public:
@@ -46,18 +46,12 @@ public:
 	void TeleopPeriodic() override {
 		// Drive with arcade style (use right stick)
 		m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
-		if(m_stick.GetRawButton(ARMS_IN) == true)
+		if(m_stick.GetRawButton(ARMS_OUT) == true)
 		{
 			arm_left.Set(0.5);
 			arm_right.Set(0.5);
 		}
-		else
-		{
-			arm_left.Set(0);
-			arm_right.Set(0);
-		}
-
-		if(m_stick.GetRawButton(ARMS_OUT) == true)
+		else if(m_stick.GetRawButton(ARMS_IN) == true)
 		{
 			arm_left.Set(-0.5);
 			arm_right.Set(-0.5);
