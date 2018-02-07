@@ -42,7 +42,6 @@ public:
 	void TeleopInit() override {}
 
 	void TeleopPeriodic() override {
-		// Drive with arcade style (use right stick)
 
 		//If the lift button is not being pressed, control the drivetrain
 		if(m_stick.GetRawButton(BUTTON_LIFT) == false)
@@ -61,6 +60,8 @@ public:
 		if(m_stick.GetRawButton(BUTTON_LIFT) == true)
 		{
 			lift.Set(m_stick.GetY());
+
+			m_robotDrive.ArcadeDrive(0, 0);
 		}
 
 
