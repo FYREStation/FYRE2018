@@ -44,12 +44,12 @@ public:
 	void TeleopPeriodic() override {
 		// Drive with arcade style (use right stick)
 		m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
-		if(m_stick.GetRawButton(BUTTON_ARMS_OUT) == true)
+		if(m_xbox.GetRawButton(BUTTON_ARMS_OUT) == true)
 		{
 			arm_left.Set(0.5);
 			arm_right.Set(0.5);
 		}
-		else if(m_stick.GetRawButton(BUTTON_ARMS_IN) == true)
+		else if(m_xbox.GetRawButton(BUTTON_ARMS_IN) == true)
 		{
 			arm_left.Set(-0.5);
 			arm_right.Set(-0.5);
@@ -60,18 +60,7 @@ public:
 			arm_right.Set(0);
 		}
 
-		if(m_stick.GetRawButton(BUTTON_LIFT_UP) == true)
-		{
-			lift.Set(0.2);
-		}
-		else if(m_stick.GetRawButton(BUTTON_LIFT_DOWN) == true)
-		{
-			lift.Set(-0.2);
-		}
-		else
-		{
-			lift.Set(0);
-		}
+		lift.Set(m_xbox.GetY());
 	}
 
 	void TestPeriodic() override {}
@@ -87,7 +76,8 @@ private:
 
 	frc::Spark lift{MOTOR_LIFT};
 
-	frc::Joystick m_stick{0};
+	frc::Joystick m_stick{JOYSTICK};
+	frc::Joystick m_xbox{XBOX};
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	frc::Timer m_timer;
 };

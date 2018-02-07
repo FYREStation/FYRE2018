@@ -14,9 +14,12 @@
 #define MOTOR_RIGHT_ARM		3
 #define MOTOR_LIFT			4
 
-#define BUTTON_ARMS_IN		2
-#define BUTTON_ARMS_OUT		1
-#define BUTTON_LIFT_UP		3
-#define BUTTON_LIFT_DOWN	4
+#define BUTTON_ARMS_IN		 5
+#define BUTTON_ARMS_OUT		 4
+#define BUTTON_LIFT 		 1
+#define BUTTON_LIFT_ACTUATE  0
+
+#define JOYSTICK	0
+#define XBOX		1
 
 #endif /* SRC_HARDWAREDEFINITIONS_H_ */
