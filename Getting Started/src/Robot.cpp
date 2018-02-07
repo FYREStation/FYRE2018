@@ -12,12 +12,7 @@
 #include <Spark.h>
 #include <Timer.h>
 #include <PWMSpeedController.h>
-
-#define ARMS_OUT	1
-#define ARMS_IN		2
-
-#define LIFT_UP_BUTTON	3
-#define LIFT_DOWN_BUTTON	4
+#include <HardwareDefinitions.h>
 
 class Robot : public frc::IterativeRobot {
 public:
@@ -49,12 +44,12 @@ public:
 	void TeleopPeriodic() override {
 		// Drive with arcade style (use right stick)
 		m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
-		if(m_stick.GetRawButton(ARMS_OUT) == true)
+		if(m_stick.GetRawButton(BUTTON_ARMS_OUT) == true)
 		{
 			arm_left.Set(0.5);
 			arm_right.Set(0.5);
 		}
-		else if(m_stick.GetRawButton(ARMS_IN) == true)
+		else if(m_stick.GetRawButton(BUTTON_ARMS_IN) == true)
 		{
 			arm_left.Set(-0.5);
 			arm_right.Set(-0.5);
@@ -65,11 +60,11 @@ public:
 			arm_right.Set(0);
 		}
 
-		if(m_stick.GetRawButton(LIFT_UP_BUTTON) == true)
+		if(m_stick.GetRawButton(BUTTON_LIFT_UP) == true)
 		{
 			lift.Set(0.2);
 		}
-		else if(m_stick.GetRawButton(LIFT_DOWN_BUTTON) == true)
+		else if(m_stick.GetRawButton(BUTTON_LIFT_DOWN) == true)
 		{
 			lift.Set(-0.2);
 		}
@@ -83,14 +78,14 @@ public:
 
 private:
 	// Robot drive system
-	frc::Spark m_left{0};
-	frc::Spark m_right{1};
+	frc::Spark m_left{MOTOR_LEFT_DRIVE};
+	frc::Spark m_right{MOTOR_RIGHT_DRIVE};
 	frc::DifferentialDrive m_robotDrive{m_left, m_right};
 	//Robot arm system
-	frc::Spark arm_left{2};
-	frc::Spark arm_right{3};
+	frc::Spark arm_left{MOTOR_LEFT_ARM};
+	frc::Spark arm_right{MOTOR_RIGHT_ARM};
 
-	frc::Spark lift{4};
+	frc::Spark lift{MOTOR_LIFT};
 
 	frc::Joystick m_stick{0};
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
