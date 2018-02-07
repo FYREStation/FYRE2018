@@ -16,7 +16,6 @@
 
 #define BUTTON_ARMS_IN		2
 #define BUTTON_ARMS_OUT		1
-#define BUTTON_LIFT_UP		3
-#define BUTTON_LIFT_DOWN	4
+#define BUTTON_LIFT			3
 
 #endif /* SRC_HARDWAREDEFINITIONS_H_ */
