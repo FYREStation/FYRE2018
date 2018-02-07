@@ -16,6 +16,9 @@
 #define ARMS_OUT	1
 #define ARMS_IN		2
 
+#define LIFT_UP_BUTTON	3
+#define LIFT_DOWN_BUTTON	4
+
 class Robot : public frc::IterativeRobot {
 public:
 	Robot() {
@@ -61,8 +64,19 @@ public:
 			arm_left.Set(0);
 			arm_right.Set(0);
 		}
-		//m_robotArms.ArcadeDrive();
 
+		if(m_stick.GetRawButton(LIFT_UP_BUTTON) == true)
+		{
+			lift.Set(0.2);
+		}
+		else if(m_stick.GetRawButton(LIFT_DOWN_BUTTON) == true)
+		{
+			lift.Set(-0.2);
+		}
+		else
+		{
+			lift.Set(0);
+		}
 	}
 
 	void TestPeriodic() override {}
@@ -75,6 +89,8 @@ private:
 	//Robot arm system
 	frc::Spark arm_left{2};
 	frc::Spark arm_right{3};
+
+	frc::Spark lift{4};
 
 	frc::Joystick m_stick{0};
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
