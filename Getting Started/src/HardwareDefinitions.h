@@ -13,9 +13,12 @@
 #define MOTOR_LEFT_ARM		2
 #define MOTOR_RIGHT_ARM		3
 #define MOTOR_LIFT			4
+#define MOTOR_ARMS_ACTUATE  5
 
 #define BUTTON_ARMS_IN		2
 #define BUTTON_ARMS_OUT		1
+#define BUTTON_ARMS_UP      5
+#define BUTTON_ARMS_DOWN    6
 #define BUTTON_LIFT			3
 
 #endif /* SRC_HARDWAREDEFINITIONS_H_ */

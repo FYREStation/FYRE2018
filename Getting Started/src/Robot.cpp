@@ -80,6 +80,19 @@ public:
 			arm_left.Set(0);
 			arm_right.Set(0);
 		}
+
+		if(m_stick.GetRawButton(BUTTON_ARMS_UP) == true)
+				{
+					arm_actuate.Set(0.5);
+				}
+				else if(m_stick.GetRawButton(BUTTON_ARMS_DOWN) == true)
+				{
+					arm_actuate.Set(-0.5);
+				}
+				else
+				{
+					arm_actuate.Set(0);
+				}
 	}
 
 	void TestPeriodic() override {}
@@ -92,6 +105,7 @@ private:
 	//Robot arm system
 	frc::Spark arm_left{MOTOR_LEFT_ARM};
 	frc::Spark arm_right{MOTOR_RIGHT_ARM};
+	frc::Spark arm_actuate{MOTOR_ARMS_ACTUATE};
 
 	frc::Spark lift{MOTOR_LIFT};
 
