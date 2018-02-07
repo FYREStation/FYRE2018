@@ -50,7 +50,7 @@ public:
 			m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
 
 			//Check if the motor has a non-zero speed
-			if(lift.Get != 0)
+			if(lift.Get() != 0)
 			{
 				lift.Set(0);
 			}
