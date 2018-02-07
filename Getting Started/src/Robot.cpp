@@ -49,7 +49,12 @@ public:
 		{
 			m_robotDrive.ArcadeDrive(m_stick.GetY(), m_stick.GetX());
 
-			lift.Set(0);
+			//Check if the motor has a non-zero speed
+			if(lift.Get != 0)
+			{
+				lift.Set(0);
+			}
+
 		}
 
 		//If the lift button is being pressed, control the lift
