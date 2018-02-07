@@ -19,7 +19,6 @@ public:
 	Robot() {
 		m_robotDrive.SetExpiration(0.1);
 		m_timer.Start();
-
 		arm_left.SetInverted(true);
 	}
 
@@ -60,6 +59,20 @@ public:
 			arm_right.Set(0);
 		}
 
+		if(m_xbox.GetRawButton(BUTTON_ARMS_UP) == true)
+		{
+			arm_actuate.Set(0.5);
+		}
+		else if(m_xbox.GetRawButton(BUTTON_ARMS_DOWN) == true)
+		{
+			arm_actuate.Set(-0.5);
+		}
+		else
+		{
+			arm_actuate.Set(0);
+		}
+
+
 		lift.Set(m_xbox.GetY());
 	}
 
@@ -73,6 +86,8 @@ private:
 	//Robot arm system
 	frc::Spark arm_left{MOTOR_LEFT_ARM};
 	frc::Spark arm_right{MOTOR_RIGHT_ARM};
+	frc::Spark arm_actuate{MOTOR_ARM_ACTUATE};
+
 
 	frc::Spark lift{MOTOR_LIFT};
 
