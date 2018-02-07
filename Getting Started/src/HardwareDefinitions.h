@@ -15,7 +15,7 @@
 #define MOTOR_LIFT			4
 
 #define BUTTON_ARMS_IN		 5
-#define BUTTON_ARMS_OUT		 4
+#define BUTTON_ARMS_OUT		 6
 #define BUTTON_LIFT 		 1
 #define BUTTON_LIFT_ACTUATE  0
 
