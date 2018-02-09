@@ -48,5 +48,7 @@ class Robot : public frc::TimedRobot
 		void AutonomousPeriodic() override;
 		void TeleopInit() override;
 		void TeleopPeriodic() override;
+	private:
+		// No private methods for now
 };
 #endif
