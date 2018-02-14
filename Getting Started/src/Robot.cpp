@@ -68,12 +68,12 @@ public:
 
 		if(m_stick.GetRawButton(BUTTON_ARMS_OUT) == true)
 		{
-			arm_left.Set(0.5);
+			arm_left.Set(-0.5);
 			arm_right.Set(0.5);
 		}
 		else if(m_stick.GetRawButton(BUTTON_ARMS_IN) == true)
 		{
-			arm_left.Set(-0.5);
+			arm_left.Set(0.5);
 			arm_right.Set(-0.5);
 		}
 		else
@@ -84,11 +84,11 @@ public:
 
 		if(m_stick.GetRawButton(BUTTON_ARMS_UP) == true)
 				{
-					arm_actuate.Set(0.5);
+					arm_actuate.Set(0.9);
 				}
 				else if(m_stick.GetRawButton(BUTTON_ARMS_DOWN) == true)
 				{
-					arm_actuate.Set(-0.5);
+					arm_actuate.Set(-0.9);
 				}
 				else
 				{
