@@ -20,7 +20,7 @@ std::shared_ptr<frc::SpeedController> RobotMap::driveTrainLeftDriveMotor;
 std::shared_ptr<frc::Encoder> RobotMap::driveTrainLeftDriveEncoder;
 std::shared_ptr<frc::PIDController> RobotMap::driveTrainLeftSide;
 std::shared_ptr<frc::SpeedController> RobotMap::driveTrainRightDriveMotor;
-std::shared_ptr<frc::Encoder> RobotMap::driveTrainRightDriveEnoder;
+std::shared_ptr<frc::Encoder> RobotMap::driveTrainRightDriveEncoder;
 std::shared_ptr<frc::PIDController> RobotMap::driveTrainRightSide;
 std::shared_ptr<frc::SpeedController> RobotMap::armsLeftArmMotor;
 std::shared_ptr<frc::SpeedController> RobotMap::armsRightArmMotor;
@@ -49,11 +49,11 @@ void RobotMap::init() {
     driveTrainRightDriveMotor.reset(new frc::Spark(1));
     lw->AddActuator("DriveTrain", "Right Drive Motor", std::static_pointer_cast<frc::Spark>(driveTrainRightDriveMotor));
     
-    driveTrainRightDriveEnoder.reset(new frc::Encoder(2, 3, true, frc::Encoder::k4X));
-    lw->AddSensor("DriveTrain", "Right Drive Enoder", driveTrainRightDriveEnoder);
-    driveTrainRightDriveEnoder->SetDistancePerPulse(1.0);
-    driveTrainRightDriveEnoder->SetPIDSourceType(frc::PIDSourceType::kRate);
-    driveTrainRightSide.reset(new frc::PIDController(1.0, 0.0, 0.0,/* F: 0.0, */ driveTrainRightDriveEnoder.get(), driveTrainRightDriveMotor.get(), 0.02));
+    driveTrainRightDriveEncoder.reset(new frc::Encoder(2, 3, true, frc::Encoder::k4X));
+    lw->AddSensor("DriveTrain", "Right Drive Encoder", driveTrainRightDriveEncoder);
+    driveTrainRightDriveEncoder->SetDistancePerPulse(1.0);
+    driveTrainRightDriveEncoder->SetPIDSourceType(frc::PIDSourceType::kRate);
+    driveTrainRightSide.reset(new frc::PIDController(1.0, 0.0, 0.0,/* F: 0.0, */ driveTrainRightDriveEncoder.get(), driveTrainRightDriveMotor.get(), 0.02));
     lw->AddActuator("DriveTrain", "Right Side", driveTrainRightSide);
     driveTrainRightSide->SetContinuous(false); driveTrainRightSide->SetAbsoluteTolerance(0.2); 
     driveTrainRightSide->SetOutputRange(-1.0, 1.0);

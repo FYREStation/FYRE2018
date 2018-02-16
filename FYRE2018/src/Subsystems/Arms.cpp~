@@ -70,12 +70,12 @@ void Arms::StopSpinning()
 
 void Arms::LowerArms()
 {
-	hingeMotor->Set(0.000);
+	hingeMotor->Set(0.50);
 }
 
 void Arms::RaiseArms()
 {
-	hingeMotor->Set(0.000);
+	hingeMotor->Set(-1.000);
 }
 
 void Arms::StopMovingArms()

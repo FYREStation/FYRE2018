@@ -53,13 +53,13 @@ void Arms::Periodic()
 void Arms::SpinWheelsForward()
 {
 	leftArmMotor->Set(1.000);
-	rightArmMotor->Set(1.000);
+	rightArmMotor->Set(-1.000);
 }
 
 void Arms::SpinWheelsBackward()
 {
 	leftArmMotor->Set(-1.000);
-	rightArmMotor->Set(-1.000);
+	rightArmMotor->Set(1.000);
 }
 
 void Arms::StopSpinning()
@@ -75,7 +75,7 @@ void Arms::LowerArms()
 
 void Arms::RaiseArms()
 {
-	hingeMotor->Set(-1.000);
+	hingeMotor->Set(0.50);
 }
 
 void Arms::StopMovingArms()

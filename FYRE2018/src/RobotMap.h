@@ -30,7 +30,7 @@ public:
 	static std::shared_ptr<frc::Encoder> driveTrainLeftDriveEncoder;
 	static std::shared_ptr<frc::PIDController> driveTrainLeftSide;
 	static std::shared_ptr<frc::SpeedController> driveTrainRightDriveMotor;
-	static std::shared_ptr<frc::Encoder> driveTrainRightDriveEnoder;
+	static std::shared_ptr<frc::Encoder> driveTrainRightDriveEncoder;
 	static std::shared_ptr<frc::PIDController> driveTrainRightSide;
 	static std::shared_ptr<frc::SpeedController> armsLeftArmMotor;
 	static std::shared_ptr<frc::SpeedController> armsRightArmMotor;
