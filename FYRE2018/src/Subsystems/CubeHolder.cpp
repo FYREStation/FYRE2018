@@ -47,7 +47,7 @@ void CubeHolder::Periodic() {
 
 void CubeHolder::unwindServo()
 {
-	stringServo->SetAngle( 180.0 );
+	stringServo->SetAngle( 90.0 );
 }
 
 void CubeHolder::windServo()
