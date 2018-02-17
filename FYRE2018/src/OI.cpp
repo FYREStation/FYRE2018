@@ -19,6 +19,7 @@
 #include "Commands/LowerArms.h"
 #include "Commands/MoveLift.h"
 #include "Commands/RaiseArms.h"
+#include "Commands/SwitchAuto.h"
 #include "Commands/UnwindServo.h"
 #include "Commands/WindServo.h"
 
@@ -49,6 +50,7 @@ OI::OI() {
     logitechButton1->WhileHeld(new EjectPowerCube());
 
     // SmartDashboard Buttons
+    frc::SmartDashboard::PutData("Switch Auto", new SwitchAuto());
     frc::SmartDashboard::PutData("Unwind Servo", new UnwindServo());
     frc::SmartDashboard::PutData("Wind Servo", new WindServo());
     frc::SmartDashboard::PutData("Move Lift", new MoveLift());
