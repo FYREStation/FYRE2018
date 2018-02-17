@@ -10,10 +10,10 @@
 
 
 #include "Robot.h"
-/* Button 3 + joystick controls arms actuating up and down
- * Button 4 and 6 control lift up and down
+/* Button 3 + joystick controls lift up and down
+ * Button 4 and 6 control arms up and down
  * Trigger and Thumb control wheels
- * 7 and 8 control servo rotate and unwind
+ * 11 and 12 control servo rotate and unwind
  * Xbox controller left stick controls left motor, right stick controls right motor
  * Left Trigger (the back most button on the left) controls throttle. Holding it down slows you down. Otherwise you are going at full speed
  */
@@ -72,8 +72,11 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	autonomousCommand = chooser.GetSelected();
+	autonomousCommand = new AutonomousCommand(); // Testing to see if this will operate on startup
 	if (autonomousCommand != nullptr)
+	{
 		autonomousCommand->Start();
+	}
 }
 
 void Robot::AutonomousPeriodic() {
@@ -86,7 +89,9 @@ void Robot::TeleopInit() {
 	// continue until interrupted by another command, remove
 	// these lines or comment it out.
 	if (autonomousCommand != nullptr)
+	{
 		autonomousCommand->Cancel();
+	}
 }
 
 void Robot::TeleopPeriodic() {

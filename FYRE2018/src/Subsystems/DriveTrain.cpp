@@ -66,7 +66,7 @@ void DriveTrain::driveLeftSide( double value )
 {
 //	leftSide->SetSetpoint( speed );
 //	leftSide->Enable();
-	leftDriveMotor->Set( value );
+	leftDriveMotor->Set( -value );
 }
 
 void DriveTrain::driveRightSide( double value )
