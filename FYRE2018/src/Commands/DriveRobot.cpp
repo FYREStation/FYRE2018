@@ -63,7 +63,23 @@ double DriveRobot::tankDrive( bool left )
 
 	double leftStick = Robot::oi->getXBox()->GetY();
 	double rightStick = Robot::oi->getXBox()->GetZ();
-	double throttle = Robot::oi->getXBox()->GetThrottle();
+
+	Robot::oi->getXBox()->SetThrottleChannel(2);
+	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
+
+	Robot::oi->getXBox()->SetThrottleChannel(3);
+	double rightThrottle = Robot::oi->getXBox()->GetThrottle();
+
+	double throttle= 0.0;
+	if ( leftThrottle > rightThrottle )
+	{
+		throttle = leftThrottle;
+	}
+	else
+	{
+		throttle = rightThrottle;
+	}
+
 	double delta = 0.10;
 
 	if ( ( leftStick >= -deadzone ) && ( leftStick <= deadzone ) )
@@ -100,6 +116,7 @@ double DriveRobot::arcadeDrive( bool left )
 
 	double yAxis = Robot::oi->getXBox()->GetY();
 	double xAxis = Robot::oi->getXBox()->GetX();
+	xAxis = -0.9 * xAxis;
 
 	Robot::oi->getXBox()->SetThrottleChannel(2);
 	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
