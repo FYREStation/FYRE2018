@@ -100,7 +100,22 @@ double DriveRobot::arcadeDrive( bool left )
 
 	double yAxis = Robot::oi->getXBox()->GetY();
 	double xAxis = Robot::oi->getXBox()->GetX();
-	double throttle = Robot::oi->getXBox()->GetThrottle();
+
+	Robot::oi->getXBox()->SetThrottleChannel(2);
+	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
+
+	Robot::oi->getXBox()->SetThrottleChannel(3);
+	double rightThrottle = Robot::oi->getXBox()->GetThrottle();
+
+	double throttle= 0.0;
+	if ( leftThrottle > rightThrottle )
+	{
+		throttle = leftThrottle;
+	}
+	else
+	{
+		throttle = rightThrottle;
+	}
 
 	if ( ( yAxis >= -deadzone ) && ( yAxis <= deadzone ) )
 	{
