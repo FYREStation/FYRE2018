@@ -62,18 +62,18 @@ void DriveTrain::Periodic() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-void DriveTrain::driveLeftSide( double speed )
+void DriveTrain::driveLeftSide( double value )
 {
 //	leftSide->SetSetpoint( speed );
 //	leftSide->Enable();
-	leftDriveMotor->Set( speed );
+	leftDriveMotor->Set( value );
 }
 
-void DriveTrain::driveRightSide( double speed )
+void DriveTrain::driveRightSide( double value )
 {
 //	rightSide->SetSetpoint( speed );
 //	leftSide->Enable();
-	rightDriveMotor->Set( speed );
+	rightDriveMotor->Set( value );
 }
 
 void DriveTrain::haltDriving()
