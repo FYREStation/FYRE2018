@@ -86,7 +86,7 @@ double DriveRobot::tankDrive( bool left )
 	// make arcade drive
 	if ( left == true )
 	{
-		return leftStick * throttle * maxSpeed;
+		return -1 * leftStick * throttle * maxSpeed;
 	}
 	else
 	{
