@@ -27,8 +27,8 @@ void DriveRobot::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void DriveRobot::Execute()
 {
-	Robot::driveTrain->driveLeftSide( tankDrive( true ) );
-	Robot::driveTrain->driveRightSide( tankDrive( false ) );
+	Robot::driveTrain->driveLeftSide( arcadeDrive( true ) );
+	Robot::driveTrain->driveRightSide( arcadeDrive( false ) );
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -115,37 +115,30 @@ double DriveRobot::arcadeDrive( bool left )
 	double maxSpeed = 1.0; // for encoder use
 
 	// Arcade Drive
-	if ( yAxis == 0 )
+	if ( left == true )
 	{
-		if ( left == true )
+		double val = yAxis + xAxis;
+		if ( val < -1 )
 		{
-			return throttle * yAxis;
+			val = -1;
 		}
-		else
+		else if ( val > 1 )
 		{
-			return throttle * yAxis;
+			val = 1;
 		}
-	}
-	else if ( xAxis < 0 )
-	{
-		if ( left == true )
-		{
-			return ( yAxis * ( 1 + ( xAxis / 2 ) ) ) * throttle * maxSpeed;
-		}
-		else
-		{
-			return yAxis * throttle * maxSpeed;
-		}
+		return val * throttle * maxSpeed;
 	}
 	else
 	{
-		if ( left == true )
+		double val = yAxis - xAxis;
+		if ( val < -1 )
 		{
-			return yAxis * throttle * maxSpeed;
+			val = -1;
 		}
-		else
+		else if ( val > 1 )
 		{
-			return ( yAxis * ( 1 - ( xAxis / 2 ) ) ) * throttle * maxSpeed;
+			val = 1;
 		}
+		return val * throttle * maxSpeed;
 	}
 }
