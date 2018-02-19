@@ -27,8 +27,16 @@ void DriveRobot::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void DriveRobot::Execute()
 {
-	Robot::driveTrain->driveLeftSide( arcadeDrive( true ) );
-	Robot::driveTrain->driveRightSide( arcadeDrive( false ) );
+	if ( Robot::driveTrain->getDriveMethod() == false )
+	{
+		Robot::driveTrain->driveLeftSide( tankDrive( true ) );
+		Robot::driveTrain->driveRightSide( tankDrive( false ) );
+	}
+	else
+	{
+		Robot::driveTrain->driveLeftSide( arcadeDrive( true ) );
+		Robot::driveTrain->driveRightSide( arcadeDrive( false ) );
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -61,8 +69,11 @@ double DriveRobot::tankDrive( bool left )
 {
 	double deadzone = 0.10;
 
-	double leftStick = Robot::oi->getXBox()->GetY();
-	double rightStick = Robot::oi->getXBox()->GetZ();
+	Robot::oi->getXBox()->SetXChannel(1);
+	Robot::oi->getXBox()->SetYChannel(5);
+
+	double leftStick = Robot::oi->getXBox()->GetX();
+	double rightStick = Robot::oi->getXBox()->GetY();
 
 	Robot::oi->getXBox()->SetThrottleChannel(2);
 	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
@@ -114,9 +125,50 @@ double DriveRobot::arcadeDrive( bool left )
 {
 	double deadzone = 0.10;
 
-	double yAxis = Robot::oi->getXBox()->GetY();
-	double xAxis = Robot::oi->getXBox()->GetX();
-	xAxis = -0.9 * xAxis;
+    Robot::oi->getXBox()->SetXChannel(0);
+    Robot::oi->getXBox()->SetYChannel(1);
+
+	double leftXAxis = Robot::oi->getXBox()->GetX();
+	double leftYAxis = Robot::oi->getXBox()->GetY();
+
+	if ( ( leftXAxis >= -deadzone ) && ( leftXAxis <= deadzone ) )
+	{
+		leftXAxis = 0.0;
+	}
+	if ( ( leftYAxis >= -deadzone ) && ( leftYAxis <= deadzone ) )
+	{
+		leftYAxis = 0.0;
+	}
+
+	Robot::oi->getXBox()->SetXChannel(4);
+	Robot::oi->getXBox()->SetYChannel(5);
+
+	double rightXAxis = Robot::oi->getXBox()->GetX();
+	double rightYAxis = Robot::oi->getXBox()->GetY();
+
+	if ( ( rightXAxis >= -deadzone ) && ( rightXAxis <= deadzone ) )
+	{
+		rightXAxis = 0.0;
+	}
+	if ( ( rightYAxis >= -deadzone ) && ( rightYAxis <= deadzone ) )
+	{
+		rightYAxis = 0.0;
+	}
+
+	double xAxis, yAxis;
+
+	if ( leftXAxis == 0.0 && leftYAxis == 0.0 )
+	{
+		xAxis = rightXAxis;
+		yAxis = rightYAxis;
+	}
+	else
+	{
+		xAxis = leftXAxis;
+		yAxis = leftYAxis;
+	}
+
+	xAxis = -0.9 * xAxis; // flips and scales down the xAxis
 
 	Robot::oi->getXBox()->SetThrottleChannel(2);
 	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
@@ -132,15 +184,6 @@ double DriveRobot::arcadeDrive( bool left )
 	else
 	{
 		throttle = rightThrottle;
-	}
-
-	if ( ( yAxis >= -deadzone ) && ( yAxis <= deadzone ) )
-	{
-		yAxis = 0.0;
-	}
-	if ( ( xAxis >= -deadzone ) && ( xAxis <= deadzone ) )
-	{
-		xAxis = 0.0;
 	}
 
 	throttle = ( ( ( 1 - throttle ) * 0.75 ) + 0.25 );
