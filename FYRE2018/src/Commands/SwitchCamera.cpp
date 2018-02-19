@@ -12,13 +12,13 @@
 
 SwitchCamera::SwitchCamera(): frc::Command()
 {
-
+	Requires(Robot::camera.get());
 }
 
 // Called just before this Command runs the first time
 void SwitchCamera::Initialize()
 {
-	Robot::server.SetSource( Robot::backCamera );
+	Robot::camera->changeToBackCamera();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -36,7 +36,7 @@ bool SwitchCamera::IsFinished()
 // Called once after isFinished returns true
 void SwitchCamera::End()
 {
-	Robot::server.SetSource( Robot::frontCamera );
+	Robot::camera->changeToFrontCamera();
 }
 
 // Called when another command which requires one or more of the same
