@@ -13,6 +13,7 @@
 SwitchDriveMethod::SwitchDriveMethod(): frc::Command()
 {
 	Requires(Robot::driveTrain.get());
+	SetTimeout( 0.1 );
 }
 
 // Called just before this Command runs the first time
@@ -37,7 +38,14 @@ void SwitchDriveMethod::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SwitchDriveMethod::IsFinished()
 {
-    return false;
+	if ( IsTimedOut() == true )
+	{
+		return true;
+	}
+		else
+	{
+		return false;
+	}
 }
 
 // Called once after isFinished returns true

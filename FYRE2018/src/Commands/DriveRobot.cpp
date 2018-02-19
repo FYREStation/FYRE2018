@@ -67,7 +67,7 @@ void DriveRobot::Interrupted()
 
 double DriveRobot::tankDrive( bool left )
 {
-	double deadzone = 0.10;
+	double deadzone = 0.20;
 
 	Robot::oi->getXBox()->SetXChannel(1);
 	Robot::oi->getXBox()->SetYChannel(5);
@@ -123,7 +123,7 @@ double DriveRobot::tankDrive( bool left )
 
 double DriveRobot::arcadeDrive( bool left )
 {
-	double deadzone = 0.10;
+	double deadzone = 0.20;
 
     Robot::oi->getXBox()->SetXChannel(0);
     Robot::oi->getXBox()->SetYChannel(1);

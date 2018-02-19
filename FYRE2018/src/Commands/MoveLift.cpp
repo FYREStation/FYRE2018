@@ -67,5 +67,12 @@ double MoveLift::calculateLiftSpeed()
 	}
 	throttle = ( ( ( 1 - throttle ) * 0.75 ) + 0.25 );
 
-	return joyStick * throttle;
+	double returnVal = joyStick * throttle;
+
+	if ( returnVal > 0.75 )
+	{
+		returnVal = 0.75;
+	}
+
+	return returnVal;
 }
