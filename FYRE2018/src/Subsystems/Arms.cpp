@@ -50,14 +50,14 @@ void Arms::Periodic()
 
 void Arms::SpinWheelsForward()
 {
-	leftArmMotor->Set(0.9);
-	rightArmMotor->Set(0.9);
+	leftArmMotor->Set(0.6);
+	rightArmMotor->Set(0.6);
 }
 
 void Arms::SpinWheelsBackward()
 {
-	leftArmMotor->Set(-0.9);
-	rightArmMotor->Set(-0.9);
+	leftArmMotor->Set(-0.6);
+	rightArmMotor->Set(-0.6);
 }
 
 void Arms::StopSpinning()

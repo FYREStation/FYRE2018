@@ -168,7 +168,7 @@ double DriveRobot::arcadeDrive( bool left )
 		yAxis = leftYAxis;
 	}
 
-	xAxis = -0.9 * xAxis; // flips and scales down the xAxis
+	xAxis = -0.7 * xAxis; // flips and scales down the xAxis
 
 	Robot::oi->getXBox()->SetThrottleChannel(2);
 	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
