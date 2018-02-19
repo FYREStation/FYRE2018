@@ -8,40 +8,40 @@
 // update. Deleting the comments indicating the section will prevent
 // it from being updated in the future.
 
-#include "WindServo.h"
+#include "SwitchCamera.h"
 
-WindServo::WindServo(): frc::Command()
+SwitchCamera::SwitchCamera(): frc::Command()
 {
-	Requires(Robot::cubeHolder.get());
+
 }
 
 // Called just before this Command runs the first time
-void WindServo::Initialize()
+void SwitchCamera::Initialize()
 {
-	Robot::cubeHolder->windServo();
+	Robot::server.SetSource( Robot::backCamera );
 }
 
 // Called repeatedly when this Command is scheduled to run
-void WindServo::Execute()
+void SwitchCamera::Execute()
 {
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool WindServo::IsFinished()
+bool SwitchCamera::IsFinished()
 {
     return false;
 }
 
 // Called once after isFinished returns true
-void WindServo::End()
+void SwitchCamera::End()
 {
-	// Nothing
+	Robot::server.SetSource( Robot::frontCamera );
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void WindServo::Interrupted()
+void SwitchCamera::Interrupted()
 {
 	End();
 }

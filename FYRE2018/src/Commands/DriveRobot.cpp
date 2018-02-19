@@ -101,7 +101,7 @@ double DriveRobot::tankDrive( bool left )
 	{
 		rightStick = 0.0;
 	}
-	throttle = ( ( ( 1 - throttle ) * 0.75 ) + 0.25 );
+	throttle = ( ( throttle * 0.5 ) + 0.5 );
 	double maxSpeed = 1.0; // for encoder use
 
 	// TankDrive
@@ -186,7 +186,7 @@ double DriveRobot::arcadeDrive( bool left )
 		throttle = rightThrottle;
 	}
 
-	throttle = ( ( ( 1 - throttle ) * 0.75 ) + 0.25 );
+	throttle = ( ( throttle * 0.5 ) + 0.5 );
 	double maxSpeed = 1.0; // for encoder use
 
 	// Arcade Drive
