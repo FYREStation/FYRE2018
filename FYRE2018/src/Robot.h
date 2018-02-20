@@ -50,5 +50,11 @@ public:
 	void AutonomousPeriodic() override;
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
+
+	static cs::UsbCamera frontCamera;
+	static cs::UsbCamera backCamera;
+	static cs::CvSink frontSink;
+	static cs::CvSink backSink;
+	static cs::VideoSink server;
 };
 #endif
