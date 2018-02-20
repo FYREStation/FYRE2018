@@ -29,13 +29,13 @@ void DriveRobot::Execute()
 {
 	if ( Robot::driveTrain->getDriveMethod() == false )
 	{
-		Robot::driveTrain->driveLeftSide( tankDrive( true ) );
-		Robot::driveTrain->driveRightSide( tankDrive( false ) );
+		Robot::driveTrain->driveLeftSide( arcadeDrive( true ) );
+		Robot::driveTrain->driveRightSide( arcadeDrive( false ) );
 	}
 	else
 	{
-		Robot::driveTrain->driveLeftSide( arcadeDrive( true ) );
-		Robot::driveTrain->driveRightSide( arcadeDrive( false ) );
+		Robot::driveTrain->driveLeftSide( davidDrive( true ) );
+		Robot::driveTrain->driveRightSide( davidDrive( false ) );
 	}
 }
 
@@ -67,96 +67,72 @@ void DriveRobot::Interrupted()
 
 double DriveRobot::tankDrive( bool left )
 {
-	double deadzone = 0.20;
+	// Set channels
+	Robot::oi->getXBox()->SetXChannel(1); // up and down on left stick
+	Robot::oi->getXBox()->SetYChannel(5); // up and down on right stick
 
-	Robot::oi->getXBox()->SetXChannel(1);
-	Robot::oi->getXBox()->SetYChannel(5);
-
+	// Get raw values
 	double leftStick = Robot::oi->getXBox()->GetX();
 	double rightStick = Robot::oi->getXBox()->GetY();
 
-	Robot::oi->getXBox()->SetThrottleChannel(2);
-	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
+	// Apply the deadzone
+	leftStick = applyDeadzone( leftStick );
+	rightStick = applyDeadzone( rightStick );
 
-	Robot::oi->getXBox()->SetThrottleChannel(3);
-	double rightThrottle = Robot::oi->getXBox()->GetThrottle();
-
-	double throttle= 0.0;
-	if ( leftThrottle > rightThrottle )
-	{
-		throttle = leftThrottle;
-	}
-	else
-	{
-		throttle = rightThrottle;
-	}
-
-	double delta = 0.10;
-
-	if ( ( leftStick >= -deadzone ) && ( leftStick <= deadzone ) )
-	{
-		leftStick = 0.0;
-	}
-	if ( ( rightStick >= -deadzone ) && ( rightStick <= deadzone ) )
-	{
-		rightStick = 0.0;
-	}
-	throttle = ( ( ( 1 - throttle ) * 0.75 ) + 0.25 );
-	double maxSpeed = 1.0; // for encoder use
+	// Get the throttle
+	double throttle = getThrottle();
 
 	// TankDrive
 	double diff = leftStick - rightStick;
+	double delta = 0.10;
+
 	if ( abs(diff) < delta )
 	{
-		return ( ( leftStick + rightStick ) / 2 ) * throttle * maxSpeed;
+		return ( ( leftStick + rightStick ) / 2 ) * throttle;
 	}
 	else if ( left == true )
 	{
-		return leftStick * throttle * maxSpeed;
+		return leftStick * throttle;
 	}
 	else
 	{
-		return rightStick * throttle * maxSpeed;
+		return rightStick * throttle;
 	}
 
 }
 
 double DriveRobot::arcadeDrive( bool left )
 {
-	double deadzone = 0.20;
+// Get left stick values
 
-    Robot::oi->getXBox()->SetXChannel(0);
-    Robot::oi->getXBox()->SetYChannel(1);
+	// Set channels
+    Robot::oi->getXBox()->SetXChannel(0); // left and right on left stick
+    Robot::oi->getXBox()->SetYChannel(1); // up and down on left stick
 
+    // Get raw values
 	double leftXAxis = Robot::oi->getXBox()->GetX();
 	double leftYAxis = Robot::oi->getXBox()->GetY();
 
-	if ( ( leftXAxis >= -deadzone ) && ( leftXAxis <= deadzone ) )
-	{
-		leftXAxis = 0.0;
-	}
-	if ( ( leftYAxis >= -deadzone ) && ( leftYAxis <= deadzone ) )
-	{
-		leftYAxis = 0.0;
-	}
+	// Apply the deadzone
+	leftXAxis = applyDeadzone( leftXAxis );
+	leftYAxis = applyDeadzone( leftYAxis );
 
-	Robot::oi->getXBox()->SetXChannel(4);
-	Robot::oi->getXBox()->SetYChannel(5);
+// Get right stick values
 
+	// Set channels
+	Robot::oi->getXBox()->SetXChannel(4); // left and right on right stick
+	Robot::oi->getXBox()->SetYChannel(5); // up and down on right stick
+
+	// Get raw values
 	double rightXAxis = Robot::oi->getXBox()->GetX();
 	double rightYAxis = Robot::oi->getXBox()->GetY();
 
-	if ( ( rightXAxis >= -deadzone ) && ( rightXAxis <= deadzone ) )
-	{
-		rightXAxis = 0.0;
-	}
-	if ( ( rightYAxis >= -deadzone ) && ( rightYAxis <= deadzone ) )
-	{
-		rightYAxis = 0.0;
-	}
+	// Apply the deadzone
+	rightXAxis = applyDeadzone( rightXAxis );
+	rightYAxis = applyDeadzone( rightYAxis );
 
+// Determine which stick to use
 	double xAxis, yAxis;
-
 	if ( leftXAxis == 0.0 && leftYAxis == 0.0 )
 	{
 		xAxis = rightXAxis;
@@ -168,26 +144,11 @@ double DriveRobot::arcadeDrive( bool left )
 		yAxis = leftYAxis;
 	}
 
-	xAxis = -0.7 * xAxis; // flips and scales down the xAxis
+	// Flips and scales down the xAxis
+	xAxis = -0.5 * xAxis;
 
-	Robot::oi->getXBox()->SetThrottleChannel(2);
-	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
-
-	Robot::oi->getXBox()->SetThrottleChannel(3);
-	double rightThrottle = Robot::oi->getXBox()->GetThrottle();
-
-	double throttle= 0.0;
-	if ( leftThrottle > rightThrottle )
-	{
-		throttle = leftThrottle;
-	}
-	else
-	{
-		throttle = rightThrottle;
-	}
-
-	throttle = ( ( ( 1 - throttle ) * 0.75 ) + 0.25 );
-	double maxSpeed = 1.0; // for encoder use
+	// Get the throttle
+	double throttle = getThrottle();
 
 	// Arcade Drive
 	if ( left == true )
@@ -201,7 +162,7 @@ double DriveRobot::arcadeDrive( bool left )
 		{
 			val = 1;
 		}
-		return val * throttle * maxSpeed;
+		return val * throttle;
 	}
 	else
 	{
@@ -214,6 +175,85 @@ double DriveRobot::arcadeDrive( bool left )
 		{
 			val = 1;
 		}
-		return val * throttle * maxSpeed;
+		return val * throttle;
+	}
+}
+
+double DriveRobot::davidDrive( bool left )
+{
+	// Set channels
+    Robot::oi->getXBox()->SetXChannel(4); // left and right on right stick
+    Robot::oi->getXBox()->SetYChannel(1); // up and down on left stick
+
+    // Get raw values
+	double xAxis = Robot::oi->getXBox()->GetX();
+	double yAxis = Robot::oi->getXBox()->GetY();
+
+	// Apply the deadzone
+	xAxis = applyDeadzone( xAxis );
+	yAxis = applyDeadzone( yAxis );
+
+	// Flips and scales down the xAxis
+	xAxis = -0.5 * xAxis;
+
+	// Get the throttle
+	double throttle = getThrottle();
+
+	// David Drive (Modified arcade)
+	if ( left == true )
+	{
+		double val = yAxis + xAxis;
+		if ( val < -1 )
+		{
+			val = -1;
+		}
+		else if ( val > 1 )
+		{
+			val = 1;
+		}
+		return val * throttle;
+	}
+	else
+	{
+		double val = yAxis - xAxis;
+		if ( val < -1 )
+		{
+			val = -1;
+		}
+		else if ( val > 1 )
+		{
+			val = 1;
+		}
+		return val * throttle;
+	}
+}
+
+double DriveRobot::getThrottle()
+{
+	Robot::oi->getXBox()->SetThrottleChannel(2);
+	double leftThrottle = Robot::oi->getXBox()->GetThrottle();
+
+	Robot::oi->getXBox()->SetThrottleChannel(3);
+	double rightThrottle = Robot::oi->getXBox()->GetThrottle();
+
+	if ( leftThrottle > rightThrottle )
+	{
+		return ( ( ( 1 - leftThrottle ) * 0.75 ) + 0.25 );
+	}
+	else
+	{
+		return ( ( ( 1 - rightThrottle ) * 0.75 ) + 0.25 );
+	}
+}
+
+double DriveRobot::applyDeadzone( double stickValue, double deadzone )
+{
+	if ( ( stickValue >= -deadzone ) && ( stickValue <= deadzone ) )
+	{
+		return 0.0;
+	}
+	else
+	{
+		return stickValue;
 	}
 }
