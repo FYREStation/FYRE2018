@@ -38,10 +38,12 @@ class OI
 	
 	
 	
+	
 	std::shared_ptr<frc::Joystick> xBox;
 	std::shared_ptr<frc::JoystickButton> xBoxButton8;
 	std::shared_ptr<frc::JoystickButton> xBoxButton1;
 	std::shared_ptr<frc::Joystick> logitech;
+	std::shared_ptr<frc::JoystickButton> logitechButton10;
 	std::shared_ptr<frc::JoystickButton> logitechButton12;
 	std::shared_ptr<frc::JoystickButton> logitechButton11;
 	std::shared_ptr<frc::JoystickButton> logitechButton6;

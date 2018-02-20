@@ -31,6 +31,7 @@ class Arms: public frc::Subsystem
 		// Functions for moving the flywheels
 		void SpinWheelsForward();
 		void SpinWheelsBackward();
+		void SpinWheelsOpposite();
 		void StopSpinning();
 
 		// Functions for moving the hinged plate

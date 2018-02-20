@@ -19,6 +19,7 @@
 #include "Commands/LowerArms.h"
 #include "Commands/MoveLift.h"
 #include "Commands/RaiseArms.h"
+#include "Commands/SpinCube.h"
 #include "Commands/SwitchAuto.h"
 #include "Commands/SwitchCamera.h"
 #include "Commands/SwitchDriveMethod.h"
@@ -40,6 +41,8 @@ OI::OI() {
     xBoxButton1->WhileHeld(new SwitchCamera());
     logitech.reset(new frc::Joystick(0));
     
+    logitechButton10.reset(new frc::JoystickButton(logitech.get(), 10));
+    logitechButton10->WhileHeld(new SpinCube());
     logitechButton12.reset(new frc::JoystickButton(logitech.get(), 12));
     logitechButton12->WhenPressed(new UnwindServo());
     logitechButton11.reset(new frc::JoystickButton(logitech.get(), 11));
@@ -56,6 +59,7 @@ OI::OI() {
     logitechButton1->WhileHeld(new EjectPowerCube());
 
     // SmartDashboard Buttons
+    frc::SmartDashboard::PutData("Spin Cube", new SpinCube());
     frc::SmartDashboard::PutData("Switch Camera", new SwitchCamera());
     frc::SmartDashboard::PutData("Switch Drive Method", new SwitchDriveMethod());
     frc::SmartDashboard::PutData("Switch Auto", new SwitchAuto());
